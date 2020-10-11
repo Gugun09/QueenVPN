@@ -1,0 +1,140 @@
+   <style type="text/css">
+    tr.noBorder td {
+      border: 0;
+    }
+    </style>
+ <!-- Content Wrapper. Contains page content -->
+  <div id="content" class="content">
+    <!-- Content Header (Page header) -->
+     <check if="{{ @user->uid }}">
+     <true>
+     <section class="content-header">         
+     <h1 class="page-header"><i class="fa fa-user cyan-text"></i> Edit User</h1>       
+      <ol class="breadcrumb">
+      	<li><a href="/home/setting"><div class="badge blue-gradient text-white">Dashboard</div>➜</a></li>
+      	<li><a href="/home/admin/server"><div class="badge blue-gradient text-white">Server List </div>➜</a></li>
+       <li><div class="badge purple-gradient text-white">User List </div></li>
+      	</ol><br />
+    </section>
+	 </true>
+   <false>
+   <section class="content-header">
+    <h1 class="page-header"><i class="fa fa-user cyan-text"></i> Add User</h1>
+      <ol class="breadcrumb">
+      	<li><a href="/home/setting"><div class="badge blue-gradient text-white">Dashboard</div>➜</a></li>
+      	<li><a href="/home/admin/server"><div class="badge blue-gradient text-white">Server List </div>➜</a></li>
+       <li><div class="badge purple-gradient text-white">User List </div></li>
+      	</ol><br />
+    </section>
+    </false>
+   </check><br />
+   
+    <!-- Main content -->
+	  <check if="{{ @message }}">     
+		<div class="alert alert-{{ @message['type'] }} alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <i class="icon fa fa-info"></i>
+      {{ @message['data'] }}
+     </div>
+    </check>
+    
+		<div class="row">
+    <div class="col-lg-4">	
+	  <div class="panel blue-gradient">
+	  <!-- box-header -->
+    <div class="panel-heading">
+   <h3 class="panel-title text-white"><i class="fa fa-user cyan-text"></i> Account Details</h3>
+    </div>
+    <!-- /.box-header -->
+     <!-- form start -->
+     <form role="form" action="{{ @URI }}" method="POST">
+     <div class="panel-body bg-white text-black">
+     <div class="form-group">
+     <label>Username</label>
+     <input class="form-control" placeholder="Username" name="user" type="text" value="{{ @user->user }}" required>
+    </div>
+    <check if="{{ !@user->uid }}">
+    <div class="form-group">
+    <label>Password</label>
+    <input class="form-control" placeholder="New Password" name="pass" type="password" required>
+   </div>
+   <div class="form-group">
+   <label>Re-enter Password</label>
+                      <input class="form-control" placeholder="Re-enter Password" name="pass_confirmation" type="password" required>
+                            </div>
+                        </check>
+              <div class="form-group">
+                <label>Exp</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="datepicker" name="exp" value="{{ @user->exp?@user->exp:date("Y/m/d",strtotime("+7 days")) }}">
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+						
+              </div>
+              <!-- /.box-body -->
+
+              <div class="panel-footer bg-white text-white">
+                <button type="submit" class="btn btn-primary">Save</button>
+                        <check if="{{ @user->uid }}">
+                            <true>
+                                <check if="{{ @user->lock }}">
+                                    <true>
+                                        <a href="{{ @URI.'/active/1' }}" class="btn btn-success">Unlock</a>
+                                    </true>
+                                    <false>
+                                        <a href="{{ @URI.'/active/0' }}" class="btn btn-success">Lock</a>
+                                    </false>
+                                </check>
+                                <a href="{{ @URI.'/delete' }}" class="btn btn-danger hapus">Delete</a>
+                            </true>
+                            <false>
+                                <a href="/home/admin/server/{{ @server->id }}/account/" class="btn btn-default">Back</a>
+                            </false>
+                        </check>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+          </div>		  
+       
+        <check if="{{ @user->uid }}">		  
+        <div class="col-lg-4">		  
+         <div class="panel blue-gradient">
+            <div class="panel-heading">
+             <h3 class="panel-title text-white"><i class="fa fa-cog fa-spin text-white"></i> Change Password</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" action="{{ @URI }}" method="POST">
+              <div class="panel-body bg-white text-black">
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input class="form-control" placeholder="New Password" name="password" type="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Re-enter New Password</label>
+                            <input class="form-control" placeholder="Re-enter New Password" name="password_confirmation" type="password" required>
+                        </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="panel-footer bg-white text-white">
+                <button type="submit" class="btn btn-primary">Save</button>
+     <a href="/home/admin/server/{{ @server->id }}/account/" class="btn btn-default pull-right"><i class="fa fa-arrow-left"></i> Back</a>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+        </div>
+</check>
+		  
+          </div>		  
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->

@@ -1,0 +1,142 @@
+    <style type="text/css">
+    a:link { text-decoration: none; }
+    </style>
+    <div id="content" class="content"> 
+      <ol class="breadcrumb pull-right">
+        <check if="{{ @seller->id }}">
+          <true>
+            <li class="breadcrumb-item"><a href="/home"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/home/admin/seller">List Seller</a></li>
+            <li  class="breadcrumb-item active">Edit Seller</li>
+          </true>
+          <false>
+            <li class="breadcrumb-item"><a href="/home"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/home/admin/seller">List Seller</a></li>
+            <li class="breadcrumb-item active">Add Seller</li>
+          </false>
+        </check>  
+      </ol>
+      <h1 class="page-header">
+        <check if="{{ @seller->id }}">
+          <true>
+            Edit Seller
+          </true>
+          <false>
+            Add Seller
+          </false>
+        </check>
+      </h1>
+      <check if="{{ @message }}">     
+        <div class="alert alert-{{ @message['type'] }}">
+          {{ @message['data'] }}
+        </div>
+      </check>
+      <div class="row">
+        <check if="{{ @seller->id }}">
+          <true> 
+            <div class="col-lg-6">
+          </true>
+          <false>
+            <div class="col-lg-12">
+          </false>
+        </check>
+          <div class="panel blue-gradient">
+            <div class="panel-heading">
+              <h4 class="panel-title text-white">        
+              <check if="{{ @seller->id }}">
+                <true>
+                  {{ @seller->firstname }} {{ @seller->lastname }}
+                </true>
+                <false>
+                  <i class="fa fa-plus"></i>
+                </false>
+              </check>
+              </h4>
+            </div>
+            <div class="panel-body bg-white text-black">
+              <form role="form" action="{{ @URI }}" method="POST">
+                <div class="form-group">
+                  <label>First name</label>
+                  <input class="form-control" placeholder="First name" name="firstname" type="text" value="{{ @seller->firstname }}" required>
+                </div>
+                <div class="form-group">
+                  <label>Last name</label>
+                  <input class="form-control" placeholder="Last name" name="lastname" type="text" value="{{ @seller->lastname }}" required>
+                </div>
+                <div class="form-group">
+                  <label>Username</label>
+                  <input class="form-control" placeholder="Username" name="username" type="text" value="{{ @seller->username }}" required>
+                </div>
+                <check if="{{ !@seller->id }}">
+                  <div class="form-group">
+                    <label>Password</label>
+                    <input class="form-control" placeholder="New Password" name="password" type="password" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Re-enter Password</label>
+                    <input class="form-control" placeholder="Re-enter Password" name="password_confirmation" type="password" required>
+                  </div>
+                </check>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input class="form-control" placeholder="Email" name="email" type="text" value="{{ @seller->email }}" required>
+                </div>
+                <div class="form-group">
+                  <label>Balance</label>
+                  <div class="input-group">
+                    <span class="input-group-addon">₱ </span>
+                    <input class="form-control" placeholder="100" name="saldo" type="number" step="1" value="{{ @seller->saldo }}" required>
+                  </div>
+                </div>
+                <div align="right">
+                  <button type="submit" class="btn btn-primary text-white">Save</button>
+                  <check if="{{ @seller->id }}">
+                    <true>
+                      <check if="{{ @seller->active==1 }}">
+                      <true>
+                        <a href="{{ @URI.'/active/0' }}" class="btn btn-warning">Locked</a>
+                      </true>
+                      <false>
+                        <a href="{{ @URI.'/active/1' }}" class="btn btn-success">Unlocked</a>
+                      </false>
+                      </check>
+                      <a href="{{ @URI.'/delete' }}" class="btn btn-danger hapus">Delete</a>
+                    </true>
+                    <false>
+                      <a href="/home/admin/seller" class="btn btn-default text-white">Back</a>
+                    </false>
+                  </check>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <check if="{{ @seller->id }}">  
+          <div class="col-lg-6">
+            <div class="panel blue-gradient">
+              <div class="panel-heading">
+                <h4 class="panel-title text-white"><i class="fa fa-lock"></i> Change Password</h4>
+              </div>
+              <div class="panel-body bg-white text-black">
+                <form role="form" action="{{ @URI }}" method="POST">
+                  <div class="form-group">
+                    <label>New Password</label>
+                    <input class="form-control" placeholder="New Password" name="password" type="password" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Re-enter New Password</label>
+                    <input class="form-control" placeholder="Re-enter New Password" name="password_confirmation" type="password" required>
+                  </div>
+
+                  <div align="right">
+                    <button type="submit" class="btn btn-primary text-white">Save</button>
+                    <a href="/home/admin/seller" class="btn btn-default text-white">Back</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </check>
+      </div>
+    </div>
+  </div>

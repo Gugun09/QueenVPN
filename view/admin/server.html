@@ -1,0 +1,122 @@
+    <style type="text/css">
+    a:link { text-decoration: none; }
+    </style>
+    <div id="content" class="content"> 
+      <ol class="breadcrumb pull-right">
+        <check if="{{ @server->id }}">
+          <true>
+            <li class="breadcrumb-item"><a href="/home"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/home/admin/server">List Server</a></li>
+            <li  class="breadcrumb-item active">Edit Server ({{ @server->servername }})</li>
+          </true>
+          <false>
+            <li class="breadcrumb-item"><a href="/home"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/home/admin/server">List Server</a></li>
+            <li class="breadcrumb-item active">Add Server</li>
+          </false>
+        </check>  
+      </ol>
+      <h1 class="page-header">
+        <check if="{{ @server->id }}">
+          <true>
+            {{ @server->servername }}
+          </true>
+          <false>
+            Add Server
+          </false>
+        </check>
+      </h1>
+      <div class="panel blue-gradient">
+        <div class="panel-heading">
+          <h4 class="panel-title text-white"><i class="fa fa-plus text-white"> Add Server</i></h4>
+        </div>
+        <div class="panel-body bg-white text-black">
+          <check if="{{ @message }}">     
+            <div class="alert alert-{{ @message['type'] }}">
+              {{ @message['data'] }}
+            </div>
+          </check>
+          <form role="form" action="{{ @URI }}" method="POST">
+          	<div class="form-group">
+              <label>Server Name</label>
+              <input class="form-control" placeholder="Server 01" name="servername" type="text" value="{{ @server->servername }}" required>
+            </div>
+            <div class="form-group">
+              <label>Server Location</label>
+              <input class="form-control" placeholder="Singapore, USA" name="country" type="text" value="{{ @server->country }}" required>
+            </div>
+            <div class="form-group">
+              <label>IP Address / Hostname</label>
+              <input class="form-control" placeholder="128.199.xxx.xx or etc." name="host" type="text" value="{{ @server->host }}" required>
+            </div>
+            <div class="form-group">
+              <label>SSH Port</label>
+              <input class="form-control" placeholder="22" name="openssh" type="text" value="{{ @server->openssh }}" required>
+            </div>
+            <div class="form-group">
+              <label>Dropbear Port</label>
+              <input class="form-control" placeholder="none kung wala" name="dropbear" type="text" value="{{ @server->dropbear }}" required>
+            </div>
+            <div class="form-group">
+              <label>SSL Port</label>
+              <input class="form-control" placeholder="none kung wala" name="stunnel" type="text" value="{{ @server->stunnel }}" required>
+            </div>
+            <div class="form-group">
+              <label>OpenVPN Port</label>
+              <input class="form-control" placeholder="465" name="openvpn_port" type="openvpn_port" value="{{ @server->openvpn_port }}" required>
+            </div>
+            <div class="form-group">
+              <label>OpenVPN Link</label>
+              <input class="form-control" placeholder="your-ip:88/GTMConfig.ovpn or your own link" name="openvpn_link" type="text" value="{{ @server->openvpn_link }}" required>
+            </div>
+            <div class="form-group">
+              <label>Squid Port</label>
+              <input class="form-control" placeholder="8080, 3128, 8000, 80" name="proxy" type="text" value="{{ @server->proxy }}" required>
+            </div>
+            <div class="form-group">
+              <label>Server Owner</label>
+              <input class="form-control" name="server_owner" type="text" value="Queen-ssh" required>
+            </div>
+            <div class="form-group">
+              <label>Torrent Allow ?</label>
+              <select class="form-control" name="torrent" value="{{ @server->torrent }}">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+            <!-- <div class="form-group">
+              <label>User limit</label>
+              <input class="form-control" placeholder="this function is not working, use 0 instead" name="limitacc" type="text" value="{{ @server->limitacc }}" required>
+            </div> -->
+            <div class="form-group">
+              <label>Price</label>
+              <div class="input-group">
+                <span class="input-group-addon">₱</span>
+                <input class="form-control" placeholder="10" name="price" type="number" step="1" value="{{ @server->price }}" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Root Password</label>
+              <input class="form-control" placeholder="root" name="root_pass" type="password">
+            </div>
+            <div align="right">
+              <button type="submit" class="btn btn-primary text-white">Save</button>
+              <check if="{{ @server->id }}">
+                <check if="{{ @server->active==1 }}">
+                  <true>
+                    <a href="{{ @URI.'/active/0' }}" class="btn btn-warning text-white">Lock</a>
+                  </true>
+                  <false>
+                    <a href="{{ @URI.'/active/1' }}" class="btn btn-success text-white">Unlock</a>
+                  </false>
+                </check>
+                <a href="{{ @URI.'/delete' }}" class="btn btn-danger hapus text-white">Delete</a>
+              </check>
+              <a href="/home/admin/server" class="btn btn-default text-white">Back</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
